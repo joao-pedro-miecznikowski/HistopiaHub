@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}
+HistopiaHub - Posts
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/conteudos.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="conteudos-jogos-wrapper">
+    <!-- Seção Conteúdos -->
+    <div class="conteudos">
+        <div class="header-conteudos">
+            <h2>Conteúdos</h2>
+            {% if 'is_admin' in session %}
+            <a href="{{ url_for('editar_conteudos', categoria_id=categoria_id) }}" class="fas fa-pencil edit-icon"></a>
+            {% endif %}
+        </div>
+
+        <ul class="content-group">
+            <li class="group-item">
+                <a href="{{ url_for('conteudos', categoria_id=categoria_id, conteudo='Todos') }}"
+                    class="{{ conteudo_selecionado == 'Todos' and 'active' or '' }}">Todos</a>
+            </li>
+            {% for conteudo in conteudos %}
+            <li class="group-item">
+                <a href="{{ url_for('conteudos', categoria_id=categoria_id, conteudo=conteudo.nome) }}"
+                    class="btn btn-outline-primary {{ conteudo_selecionado == conteudo.nome and 'active' or '' }}">
+                    {{ conteudo.nome }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Seção Jogos -->
+    <div class="jogos">
+        <h2>Jogos</h2>
+        <div id="game-grid">
+            {% for post in posts %}
+            <a href="{{ url_for('post', post_id=post.id) }}" class="game-link">
+                <div class="game-box" data-background="{{ url_for('static', filename=post.imagem_url) }}">
+                    <h3 class="game-title">{{ post.titulo[:50] }}</h3>
+                </div>
+            </a>
+            {% else %}
+            <p>Nenhum jogo encontrado para esta categoria.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const gameBoxes = document.querySelectorAll('.game-box');
+        gameBoxes.forEach(function (box) {
+            const backgroundUrl = box.getAttribute('data-background');
+            if (backgroundUrl) {
+                box.style.backgroundImage = `url(${backgroundUrl})`;
+            }
+        });
+    });
+</script>
+{% endblock %}

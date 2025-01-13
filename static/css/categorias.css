@@ -1,0 +1,119 @@
+body {
+  font-family: Arial, sans-serif;
+  background-image: url('../img/tela_inicial.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  color: #333;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.header .logo img {
+  height: 100px;
+}
+
+.search {
+  position: relative;
+  width: 300px;
+}
+
+.header .search input {
+  width: 100%;
+  padding: 10px 40px 10px 10px;
+  font-size: 16px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+.search i {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ccc;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.header .buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.header .buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  color: white;
+}
+
+.header .games {
+  background-color: #e74c3c;
+}
+
+.header .login {
+  background-color: #2ecc71;
+}
+
+.content {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content h1 {
+  color: #d4a41a;
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.content h2 {
+  color: #d4a41a;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.game-box {
+  background-color: #b78c42;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  height: 150px;
+}
+
+.game-grid a {
+  text-decoration: none;
+  color: white;
+}
+
+.game-box:hover {
+  background-color: #bf8623;
+}

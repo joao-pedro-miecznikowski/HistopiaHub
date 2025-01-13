@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}
+HistopiaHub - Posts Pendentes
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/posts_pendentes.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="jogos">
+    <h2>Posts Pendentes</h2>
+    <div id="game-grid">
+        {% if post_pendente %}
+        <div class="publicacao">
+            <div style="display: flex;">
+                <img style="width: 200px; height:200px; border-radius: 10px;" src="{{ url_for('static', filename=post_pendente.imagem_url) }}">
+                <div>
+                    <h3>{{ post_pendente.titulo }}</h3>
+                    <p>{{ post_pendente.descricao }}</p>
+                    <p>Por: {{ Usuario.query.filter_by(id=post_pendente.usuario_id).first().nome }}</p>
+                </div>
+            </div>
+            <div class="links">
+                <p>Link do artigo: <a style="color: #0000FF; text-decoration: none;">{{ post_pendente.link_artigo }}</a></p>
+            </div>
+            <div class="links">
+                <p>Link do jogo: <a style="color: #0000FF; text-decoration: none;">{{ post_pendente.link_jogo }}</a></p>
+            </div>
+
+            <!-- Botões de Aprovar e Reprovar -->
+            <form method="POST" action="{{ url_for('posts_pendentes') }}">
+                <button type="submit" name="acao" value="aprovar">Aprovar</button>
+                <button type="button" id="reprovarButton">Reprovar</button> <!-- Alterado para type="button" -->
+                
+                <!-- Campo para Motivo da Reprovação -->
+                <div id="motivo-reprovacao" style="display: none;">
+                    <label for="motivo">Motivo da Reprovação:</label>
+                    <input type="text" id="motivo" name="motivo" placeholder="Insira o motivo">
+                    <button type="submit" name="acao" value="reprovar">Enviar</button> <!-- Mudei o botão para enviar -->
+                </div>
+            </form>
+        </div>
+        {% else %}
+            <p>Nenhum post pendente encontrado.</p>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const reprovarButton = document.getElementById('reprovarButton');
+        const motivoReprovacaoDiv = document.getElementById('motivo-reprovacao');
+
+        reprovarButton.addEventListener('click', function() {
+            motivoReprovacaoDiv.style.display = 'block'; // Mostra o campo para inserir o motivo
+        });
+    });
+</script>
+
+{% endblock %}

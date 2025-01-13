@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}
+HistopiaHub - Post
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/post.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="publicacao">
+    <div class="post-header">
+        <div class="post-title">
+            <h3>{{ post.titulo }}</h3>
+            {% if session['user_id'] == post.usuario_id or session.get('is_admin') %}
+            <a class="fas fa-pencil" style="font-size: 14px; text-decoration: none;"
+                href="{{ url_for('editar_post', post_id=post.id) }}"></a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="post-body" style="display:flex;">
+        <img class="post-image" src="{{ url_for('static', filename=post.imagem_url) }}" alt="Imagem do Post">
+        <div>
+            <p class="post-description">{{ post.descricao }}</p>
+            <p class="username">Por:
+                <a style="text-decoration: none; color: #2c3e50;"
+                    href="{{ url_for('perfil_pessoal', user_id=usuario.id) }}">{{ usuario.nome }}</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="post-links">
+        <p><strong>Link do artigo:</strong> <a href="{{ post.link_artigo }}" target="_blank" class="post-link">
+            {{ post.link_artigo[:75] }}...</a></p>
+        <p><strong>Link do jogo:</strong> <a href="{{ post.link_jogo }}" target="_blank" class="post-link">
+            {{ post.link_jogo[:75] }}...</a></p>
+    </div>
+
+    <div class="post-info">
+        <p class="post-date">Publicado em: {{ post.data_publicacao.strftime('%d/%m/%Y %H:%M') }}</p>
+    </div>
+
+    <div class="post-rating">
+        <h4>Média de Avaliações: {{ post.calcular_media_avaliacoes() }}</h4>
+        <form action="{{ url_for('avaliar_post', post_id=post.id) }}" method="POST">
+            <div style="display: flex; justify-content: space-between;">
+                <div>
+                    <label for="nota">Avalie este post (0 a 5):</label>
+                    <select name="nota" id="nota" required>
+                        <option value="">Selecione uma nota</option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <button type="submit" class="rate-btn">Avaliar</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

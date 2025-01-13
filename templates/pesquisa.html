@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+HistopiaHub - {{ query }}
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pesquisa.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="pesquisa-container">
+    <h1>Resultados para "{{ query }}"</h1>
+
+    <div class="resultados">
+        {% if resultados %}
+            {% for post in resultados %}
+                <div class="post">
+                    <div class="post-imagem">
+                        <a href="{{ url_for('post', post_id=post.id) }}">
+                            <img src="{{ url_for('static', filename=post.imagem_url) }}" alt="Imagem do post">
+                        </a>
+                    </div>
+                    <div class="post-conteudo">
+                        <a href="{{ url_for('post', post_id=post.id) }}">
+                            <h2>{{ post.titulo }}</h2>
+                        </a>
+                        <p>{{ post.descricao[:100] }}...</p> <!-- Exibe os primeiros 100 caracteres da descrição -->
+                        <p><strong>Autor:</strong> {{ Usuario.query.filter_by(id=post.usuario_id).first().nome }}</p> <!-- Exibe o nome do autor -->
+                        <p><strong>Data de Criação:</strong> {{ post.data_publicacao.strftime('%d/%m/%Y') }}</p> <!-- Exibe a data formatada -->
+                        <p><strong>Avaliação:</strong> {{ post.calcular_media_avaliacoes() | round(2) }} / 5</p> <!-- Exibe a média da avaliação -->
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Nenhum resultado encontrado.</p>
+        {% endif %}
+    </div>
+
+    <div class="botoes">
+        <a href="{{ url_for('criar_post') }}" class="botao criar-post">
+            <i class="fas fa-plus"></i>
+        </a>
+        <a href="{{ url_for('notificacoes') }}" class="botao notificacoes">
+            <i class="fas fa-bell"></i>
+        </a>
+    </div>
+</div>
+{% endblock %}

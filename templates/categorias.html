@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+HistopiaHub - Categorias
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/categorias.css') }}">
+{% endblock %}
+
+{% block content %}
+<h1>Jogos</h1>
+<h2>Série</h2>
+<div class="game-grid">
+    {% for categoria in categorias %}
+    <a href="{{ url_for('conteudos', categoria_id=categoria.id) }}">
+        <div class="game-box">
+            {{ categoria.nome }}
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

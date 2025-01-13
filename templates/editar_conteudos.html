@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+HistopiaHub - Editar Conteúdos
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/editar_conteudos.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="conteudos">
+    <div class="header-conteudos">
+        <h2>Conteúdos</h2>
+    </div>
+
+    <form method="POST" class="form-conteudo">
+        <div class="form-group">
+            <label for="nome_conteudo">Adicionar Conteúdo:</label>
+            <input type="text" name="nome_conteudo" class="field" required>
+        </div>
+        <button type="submit" class="btn-adicionar">Adicionar</button>
+    </form>
+
+    <ul class="content-group">
+        <li class="group-item">
+            Todos
+        </li>
+        {% for conteudo in conteudos %}
+        <div class="conteudo-item">
+            <li class="group-item">
+                {{ conteudo.nome }}
+            </li>
+            <form method="POST" action="{{ url_for('remover_conteudo', conteudo_id=conteudo.id) }}" class="form-delete">
+                <button type="submit"  class="fas fa-trash" id="btn-delete" onclick="return confirm('Você tem certeza que deseja remover este conteúdo? Todos os posts associados serão deletados.');"></button>
+            </form>
+        </div>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

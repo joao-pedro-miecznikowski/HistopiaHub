@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Notificações
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/notificacoes.css') }}">
+{% endblock %}
+
+{% block content %}
+<h2>Notificações</h2>
+<ul class="notifications-list">
+    {% for notificacao in notificacoes %}
+    <li class="notification-item">
+        <div class="notification-content">
+            {% if notificacao.tipo == 'aprovação' %}
+            <p class="notification-message"><strong>Seu post "{{ notificacao.post.titulo }}" foi aprovado!</strong></p>
+            {% elif notificacao.tipo == 'reprovação' %}
+            <p class="notification-message"><strong>Seu post "{{ notificacao.post.titulo }}" foi reprovado.</strong>
+                Motivo: {{ notificacao.motivo }}. <a href="{{ url_for('editar_post', post_id=notificacao.post_id) }}"
+                    class="edit-link">Clique aqui para editar.</a></p>
+            {% endif %}
+            <p class="notification-date">{{ notificacao.data.strftime('%d %b %Y - %H:%M') }}</p>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

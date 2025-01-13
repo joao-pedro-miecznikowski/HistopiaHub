@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+HistopiaHub
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tela_inicial.css') }}">
+{% endblock %}
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+<h1>Home</h1>
+<h2>Sobre nós</h2>
+<div class="text">
+    <p>Sou aluno do IFPR e desenvolvi este projeto com o objetivo de proporcionar uma forma interativa e envolvente de aprender História. A proposta surgiu para explorar conteúdos educativos de forma lúdica, auxiliando tanto docentes quanto discentes no processo de aprendizagem. O projeto visa criar uma experiência didática que complemente o ensino tradicional e torne o aprendizado mais dinâmico e interessante.</p>
+    <p>A plataforma foi idealizada para ser uma ferramenta inovadora que torna o estudo mais acessível e estimulante para os alunos, oferecendo uma maneira prática e divertida de aprender. Ao integrar métodos interativos e dinâmicos, o projeto permite que os estudantes não apenas adquiram novos conhecimentos, mas também revisem e consolidem conteúdos essenciais do currículo escolar de forma envolvente e motivadora.</p>
+    <div class="botoes">
+        {% if 'logged_in' in session %}
+            <!-- Botão de nova publicação -->
+            <a href="{{ url_for('criar_post') }}" class="botao criar-publicacao">
+                <i class="fas fa-plus"></i>
+            </a>
+
+            {% if session.get('is_admin') %}
+                <!-- Botão de publicações pendentes -->
+                <a href="{{ url_for('posts_pendentes') }}" class="botao criar-publicacao">
+                    <i class="fas fa-list"></i>
+                </a>
+            {% else %}
+                <!-- Botão de notificações -->
+                <a href="{{ url_for('notificacoes') }}" class="botao notificacoes">
+                    <i class="fas fa-bell"></i>
+                </a>
+            {% endif %}
+        {% endif %}
+    </div>
+
+
+    <div>
+        {% endblock %}

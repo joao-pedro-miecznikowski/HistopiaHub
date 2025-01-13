@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block title %}
+HistopiaHub - Criar Post
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/criar_post.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.15/cropper.min.css">
+{% endblock %}
+
+{% block content %}
+<h1>Enviar post para análise</h1>
+<form id="publicacaoForm" action="{{ url_for('criar_post') }}" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" placeholder="Insira o título" required>
+    </div>
+
+    <div class="form-group">
+        <label for="descricao">Descrição:</label>
+        <textarea id="descricao" name="descricao" placeholder="Insira a descrição" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="link_jogo">Link do jogo:</label>
+        <input type="text" id="link_jogo" name="link_jogo" placeholder="Insira o link do jogo" required>
+    </div>
+
+    <div class="form-group">
+        <label for="link_artigo">Link para o artigo:</label>
+        <input type="text" id="link_artigo" name="link_artigo" placeholder="Insira o link para o artigo" required>
+    </div>
+
+    <div class="form-group">
+        <label for="imagem">Imagens:</label>
+        <input type="file" id="imagemInput" name="imagem" accept="image/*" required>
+        <div id="previewContainer" style="display:none;">
+            <img id="imagePreview" style="max-width: 100%;">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="categoria">Categoria</label>
+        <select class="form-control" id="categoria" name="categoria" required>
+            <option value="" disabled selected>Selecione uma categoria</option>
+            {% for categoria in categorias %}
+            <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="conteudo">Conteúdo</label>
+        <select class="form-control" id="conteudo" name="conteudo" required>
+            <option value="">Selecione uma categoria primeiro</option>
+            {% for conteudo in conteudos %}
+            <option value="{{ conteudo.id }}">{{ conteudo.nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="submit-btn">Enviar</button>
+    </div>
+</form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.15/cropper.min.js"></script>
+<script>
+let cropper;
+
+document.getElementById('inputImage').addEventListener('change', function (e) {
+    const files = e.target.files;
+    const done = (url) => {
+        document.getElementById('inputImage').value = '';
+        const imgElement = document.getElementById('image');
+        imgElement.src = url;
+        imgElement.style.display = 'block'; // Exibe a imagem
+    };
+
+    let reader;
+    let file;
+
+    if (files && files.length > 0) {
+        file = files[0];
+
+        if (URL) {
+            done(URL.createObjectURL(file));
+        } else if (FileReader) {
+            reader = new FileReader();
+            reader.onload = (event) => {
+                done(event.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+});
+
+document.getElementById('image').addEventListener('load', function () {
+    if (cropper) {
+        cropper.destroy(); // Destrói o cropper anterior, se existir
+    }
+    cropper = new Cropper(this, {
+        aspectRatio: 1, // Mantém a proporção quadrada
+        viewMode: 1,
+        autoCropArea: 1,
+        zoomable: true,
+        scalable: true,
+    });
+});
+
+document.getElementById('upload-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const canvas = cropper.getCroppedCanvas({
+        width: 200,
+        height: 200,
+    });
+    canvas.toBlob((blob) => {
+        const formData = new FormData();
+        formData.append('croppedImage', blob);
+        // Envie o formData para o seu servidor
+        fetch('/minha_conta', {
+            method: 'POST',
+            body: formData,
+        }).then(response => {
+            if (response.ok) {
+                window.location.reload(); // Recarrega a página após o upload
+            } else {
+                alert('Erro ao atualizar a foto de perfil.');
+            }
+        });
+    });
+});s
+</script>
+{% endblock %}

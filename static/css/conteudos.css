@@ -1,0 +1,304 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('../img/tela_inicial.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    color: #333;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: -50px;
+  padding: 10px 20px;
+ 
+}
+
+.header .logo img {
+  height: 100px;
+}
+.search {
+  position: relative;
+  width: 300px; 
+}
+
+.header .search input {
+  width: 100%;
+  padding: 10px 40px 10px 10px;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 40px;
+  border: 1px solid #ccc;
+}
+.search i {
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ccc; 
+  font-size: 20px; 
+  cursor: pointer;
+}
+.header .buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.header .buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  color: white;
+
+}
+
+.header .games {
+  background-color: #e74c3c;
+  
+}
+
+.header .login {
+  background-color: #2ecc71;
+  
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left; 
+}
+
+.content h1 {
+    color: #d4a41a;
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.content h2 {
+    color: #d4a41a;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.group-item a{
+  text-decoration: none;
+  color: black;
+}
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto; 
+}
+
+.game-box {
+  position: relative;
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: normal;
+}
+
+.game-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.game-title,
+.game-box p {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+}
+
+.game-title {
+  position: relative; /* Necessário para que o texto fique acima do overlay */
+  z-index: 2; /* Coloca o texto acima do overlay */
+}
+
+.game-grid .game-box:nth-child(odd) {
+    margin-right: -100px; 
+    margin-left: 100px;
+}
+
+.game-box:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+.conteudos,
+.jogos {
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.conteudos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit-icon {
+  font-size: 20px;
+  text-decoration: none;
+  color: black;
+}
+
+.content-group {
+  list-style: none;
+  padding: 0;
+}
+
+.game-link {
+  text-decoration: none;
+}
+
+/* Estrutura principal da página */
+.conteudos-jogos-wrapper {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+/* Seção Conteúdos */
+.conteudos {
+  width: 30%;
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Grid para os jogos */
+#game-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 jogos por linha */
+  gap: 20px;
+}
+
+/* Estilo das caixas de jogos */
+.game-box {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  background-color: #ccc; /* Cor de fundo padrão */
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+}
+
+.game-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  margin: 10px;
+}
+
+.game-box p {
+  font-size: 1rem;
+  color: white;
+  margin: 0 10px 10px 10px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.game-link {
+  align-content: center;
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.game-box:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 1024px) {
+  #game-grid {
+      grid-template-columns: repeat(2, 1fr); /* 2 jogos por linha para telas médias */
+  }
+}
+
+@media (max-width: 600px) {
+  #game-grid {
+      grid-template-columns: 1fr; /* 1 jogo por linha para telas pequenas */
+  }
+}
+
+/* Estilização dos botões na seção de conteúdos */
+.content-group .group-item a {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 5px 0;
+  background-color: rgba(0,0,0,0);  /* Cor verde */
+  font-size: 1rem;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 5px;
+  text-align: center;
+  border: 2px solid #d4a41a;
+  border-radius: 10px;
+  color: #d4a41a;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover e Active */
+.content-group .group-item a:hover {
+  background-color: rgba(0,0,0,0);  /* Verde mais escuro */
+  border: 3px solid #c1971a;
+  color: #c1971a;
+  border-radius: 10px;
+  transform: translateY(-3px);  /* Efeito de elevação */
+}
+
+/* Responsividade para os botões */
+@media (max-width: 600px) {
+  .content-group .group-item a {
+      padding: 8px 16px;  /* Ajusta o tamanho dos botões para telas pequenas */
+      font-size: 0.9rem;  /* Ajusta o tamanho da fonte para telas pequenas */
+  }
+}

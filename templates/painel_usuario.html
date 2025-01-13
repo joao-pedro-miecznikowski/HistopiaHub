@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+HistopiaHub - Painel de usuário
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/painel.css') }}">
+{% endblock %}
+
+{% block login %}
+{% endblock %}
+
+{% block content %}
+
+<main class="user-panel">
+    <div class="panel-content">
+        <h1>Painel do Usuário</h1>
+        <img src="{{ url_for('static', filename='img/usuario_logo.png') }}" alt="User Icon" class="user-icon">
+        <h2>{{ usuario.nome }}</h2>
+
+        <ul class="user-options">
+            <li><a href="{{ url_for('perfil_pessoal', user_id=session['user_id']) }}">Perfil Pessoal</a></li>
+            <li><a href="{{ url_for('editar_perfil') }}">Editar perfil</a></li>
+            <li><a href="{{ url_for('logout') }}">Sair</a></li>
+        </ul>
+    </div>
+</main>
+
+{% endblock %}

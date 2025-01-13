@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}
+HistopiaHub - {{ usuario.nome }}
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/perfil_pessoal.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="conteudo">
+    <h2 style="color: black;">{{ usuario.nome }}</h2>
+
+    <h2>Jogos</h2>
+
+    <!-- Contêiner principal com os botões dentro -->
+    <div id="game-container-wrapper">
+        <!-- Botão para a esquerda -->
+        <button id="prev-btn">&#10094;</button>
+
+        <!-- Contêiner de jogos -->
+        <div id="game-container">
+            {% for post in posts %}
+            <a style="text-decoration: none;" href="{{ url_for('post', post_id=post.id) }}">
+                <div class="game-box" data-background="{{ url_for('static', filename=post.imagem_url) }}">
+                    <div class="overlay"></div>
+                    <h3 class="game-title">{{ post.titulo }}</h3>
+                    <p>{{ post.descricao }}</p>
+                </div>
+            </a>
+            {% else %}
+                <p>O usuário não possui jogos publicados.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Botão para a direita -->
+        <button id="next-btn">&#10095;</button>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const gameBoxes = document.querySelectorAll('.game-box');
+        gameBoxes.forEach(function (box) {
+            const backgroundUrl = box.getAttribute('data-background');
+            if (backgroundUrl) {
+                box.style.backgroundImage = `url(${backgroundUrl})`;
+            }
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        const gameContainer = document.getElementById('game-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        let scrollAmount = 0;
+
+        prevBtn.addEventListener('click', function () {
+            gameContainer.scrollBy({
+                left: -200,  // Movimenta 200px para a esquerda
+                behavior: 'smooth'
+            });
+        });
+
+        nextBtn.addEventListener('click', function () {
+            gameContainer.scrollBy({
+                left: 200,  // Movimenta 200px para a direita
+                behavior: 'smooth'
+            });
+        });
+    });
+
+</script>
+{% endblock %}
